@@ -4,14 +4,22 @@
 
 ## 根据移动端applemusic 主要分为 资料库，为你推荐，浏览，广播 四个部分，目前已完成前三个大部分功能。 
 
-## 技术栈： VUE全家桶，better-scroll ,awesome-swiper, js-cookie, 其余全部手打
+### 技术栈： VUE全家桶，better-scroll ,awesome-swiper, js-cookie, 其余全部手打
 
 ## 后端接口 ： 
 https://binaryify.github.io/NeteaseCloudMusicApi
 
-## 由于本人5月份开始接触学习前端，8月初辞职全日学习，目前能力较弱，代码可能凌乱，优化不行，请见谅。
+### 由于本人5月份开始接触学习前端，8月初辞职全日学习，目前能力较弱，代码可能凌乱，优化不行，请见谅。
 
+![image text](https://github.com/AndSpark/pic/blob/master/1.png)
 
+![image text](https://github.com/AndSpark/pic/blob/master/2.png)
+
+![image text](https://github.com/AndSpark/pic/blob/master/3.png)
+
+![image text](https://github.com/AndSpark/pic/blob/master/4.png)
+
+![image text](https://github.com/AndSpark/pic/blob/master/5.png)
 
 ## Project setup
 ```
