@@ -49,8 +49,7 @@ export default {
   computed: {},
   methods: {
     sendListId(id) {
-      this.$store.commit("sendListId", id);
-      this.$router.push("/listdetail");
+      this.$router.push({ name: "ListDetail", params: { id } });
     },
   },
 };

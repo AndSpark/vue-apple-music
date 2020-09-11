@@ -5,7 +5,7 @@
       <p>每日推荐</p>
     </div>
     <div class="songs">
-      <div class="song-grid" @click="songsClick">
+      <div class="song-grid" @click="dailyClick">
         <div class="cover">
           <p>{{week(new Date().getDay())}}</p>
           <p>{{new Date().getDate()}}</p>
@@ -83,17 +83,11 @@ export default {
       let item = list.shift();
       this.$store.commit("playSong", { item, playlist: list });
     },
-    songsClick() {
-      this.$store.commit("sendDailySongs", this.dailySongs);
-      this.$router.push("/listdetail");
-    },
-    resourceTap(id) {
-      this.$store.commit("sendListId", id);
-      this.$router.push("/listdetail");
+    dailyClick() {
+      this.$router.push({ namte: "ListDetail", params: { id: "daily" } });
     },
     sendList(item) {
-      this.$store.commit("sendListId", item.id);
-      this.$router.push("/listdetail");
+      this.$router.push({ name: "ListDetail", params: { id: item.id } });
     },
     week(day) {
       switch (day) {

@@ -1,6 +1,6 @@
 <template>
   <div class="browse-page">
-    <p class="browse-title">浏览</p>
+    <h2 class="browse-title">浏览</h2>
     <div class="browse-banner">
       <div v-swiper="swiperOption" instance-name="Swiper">
         <div class="swiper-wrapper">
@@ -131,7 +131,6 @@ export default {
       let { list } = await getTopList_();
       this.rankList = list[0];
     },
-
     bannerClick(item) {
       this.$store.commit("playSong", {
         item,
@@ -139,8 +138,7 @@ export default {
       });
     },
     sendList(item) {
-      this.$store.commit("sendListId", item.id);
-      this.$router.push("/listdetail");
+      this.$router.push({ name: "ListDetail", params: { id: item.id } });
     },
     more() {
       this.$router.push("/morelist");

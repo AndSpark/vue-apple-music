@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import SwiperList from "@/components/content/swiperList/SwiperList";
 import ListItem from "@/components/content/listItem/ListItem";
 
 import {
@@ -29,13 +28,13 @@ import {
   getSong_,
   checkSong_,
   getAlbum_,
+  getRecommendSongs_,
 } from "@/network/content";
 import { filterList } from "@/common/util";
 
 export default {
   name: "ListDetail",
   components: {
-    SwiperList,
     ListItem,
   },
   props: {},
@@ -51,27 +50,12 @@ export default {
       count: 0,
     };
   },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (vm.$store.state.listId || vm.$store.state.dailySongs) {
-        next();
-      } else {
-        next("/library");
-      }
-    });
-  },
   created() {
     this.getListDetail();
   },
   computed: {
-    dailySongs() {
-      return this.$store.state.dailySongs;
-    },
-    isDaily() {
-      return this.$store.state.isDaily;
-    },
     id() {
-      return this.$store.state.listId;
+      return this.$route.params.id;
     },
     //如果列表中歌曲发生变动，需要重新获取列表
     timestamp() {
@@ -90,16 +74,17 @@ export default {
   methods: {
     async getListDetail() {
       //每日列表
-      if (this.isDaily) {
-        this.playlist = this.dailySongs;
-        this.coverImgUrl = this.dailySongs[0].al.picUrl;
-        this.name = "每日歌曲推荐";
-        this.creator = "网易云音乐";
-        this.desc = "根据你的音乐口味生成，每天06:00更新";
-        return 0;
+      if (this.id == "daily") {
+        let res = await getRecommendSongs_();
+        filterList(res.data.dailySongs).then((list) => {
+          this.playlist = list;
+          this.coverImgUrl = this.playlist[0].al.picUrl;
+          this.name = "每日歌曲推荐";
+          this.creator = "网易云音乐";
+          this.desc = "根据你的音乐口味生成，每天06:00更新";
+        });
+        return;
       }
-
-      if (this.$store.state.listId == 0) return 0;
 
       //专辑列表
       let res = await getAlbum_(this.id);
@@ -111,14 +96,14 @@ export default {
         this.name = res.album.name;
         this.creator = res.album.artists[0].name;
         this.desc = res.album.description;
-        return 0;
+        return;
       }
 
       //歌单列表
 
       let { playlist } = await getListDetail_(this.id, this.timestamp);
       this.$store.commit("clearRefreshList");
-      filterList(playlist.tracks, this.id).then((list) => {
+      filterList(playlist.tracks, playlist.id, playlist.name).then((list) => {
         this.playlist = list;
       });
 
@@ -127,7 +112,7 @@ export default {
       this.creator = playlist.creator.nickname;
       this.desc = playlist.description;
     },
-
+    //如果V是true，代表随机播放
     playSong(v) {
       if (v) {
         let l = this.$refs.listItem.playlist.length;

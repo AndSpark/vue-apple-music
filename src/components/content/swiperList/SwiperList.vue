@@ -7,7 +7,7 @@
     <div class="swiper-wrapper">
       <div v-for="(item, index) in list" :key="index" class="swiper-slide" :class="{'s-img':small}">
         <img
-          :src="item.picUrl ? item.picUrl + '?param=500y500' :item.al.picUrl + '?param=500y500'"
+          :src="item.picUrl ? item.picUrl + imgSize :item.al.picUrl + imgSize "
           @load="$emit('refresh')"
           @click="itemClick(item)"
         />
@@ -47,6 +47,10 @@ export default {
     small: {
       type: Boolean,
       default: false,
+    },
+    imgSize: {
+      type: String,
+      default: "?param=500y500",
     },
   },
   data() {

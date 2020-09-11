@@ -75,7 +75,9 @@ export default {
       }
       this.$toast.show("添加成功");
       this.$store.commit("needRefreshList", pid);
-      this.$parent.$refs.view.getListDetail();
+      if (this.$route.name == "ListDetail") {
+        this.$parent.$refs.view.getListDetail();
+      }
       return this.back();
     },
   },

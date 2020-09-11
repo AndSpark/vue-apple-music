@@ -1,4 +1,5 @@
 import { getSong_ } from '@/network/content'
+import { getMVUrl_ } from '@/network/mv'
 
 export function debounce(func, delay) {
 	let timer = null
@@ -10,7 +11,7 @@ export function debounce(func, delay) {
 	}
 }
 
-export async function filterList(list, listId) {
+export async function filterList(list, listId, listName) {
 	let { data } = await getSong_(list.map(v => (v = v.id)).join(','))
 	return list.map(item => {
 		return {
@@ -20,6 +21,7 @@ export async function filterList(list, listId) {
 			al: item.al,
 			url: data.find(v => v.id == item.id).url,
 			listId: listId ? listId : null,
+			listName: listName ? listName : null,
 		}
 	})
 }
@@ -37,7 +39,6 @@ export function filterList2(list) {
 	})
 }
 
-//新歌速递
 export async function filterList3(list) {
 	let { data } = await getSong_(list.map(v => (v = v.id)).join(','))
 	return list.map(item => {
@@ -73,5 +74,26 @@ export async function filterListFM(list) {
 			url: data.find(v => v.id == item.id).url,
 			FMMode: true,
 		}
+	})
+}
+
+export async function filterListMV(list) {
+	return await Promise.all(
+		list.map(async v => {
+			let { data } = await getMVUrl_(v.id)
+			return {
+				id: v.id,
+				name: v.name,
+				picUrl: v.cover || v.imgurl,
+				ar: v.artists || [v.artist],
+				al: {
+					picUrl: v.cover || v.imgurl,
+				},
+				url: data.url,
+				mv: true,
+			}
+		})
+	).then(res => {
+		return res.filter(v => v.url)
 	})
 }

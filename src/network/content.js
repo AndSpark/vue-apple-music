@@ -1,5 +1,4 @@
 import axios from '@/network/axios'
-import Cookies from 'js-cookie'
 export function getListDetail_(id, timestamp = 0) {
 	return axios({
 		url: '/playlist/detail',
@@ -176,14 +175,14 @@ export function getComment_(id, limit = 20, offset) {
 		},
 	})
 }
-export function getHotComment_(id, limit = 20, offset) {
+export function getHotComment_(id, limit = 20, offset, type = 0) {
 	return axios({
 		url: '/comment/hot',
 		params: {
 			id,
 			limit,
 			offset,
-			type: 0,
+			type,
 		},
 	})
 }

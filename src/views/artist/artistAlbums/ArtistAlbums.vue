@@ -1,45 +1,39 @@
 <template>
   <div class="more-detail">
-    <p>{{title1}}</p>
-    <cover-list :list="list1" @refresh="$emit('refresh')"></cover-list>
+    <p>专辑</p>
+    <cover-list :list="list" @refresh="$emit('refresh')"></cover-list>
   </div>
 </template>
 
 <script>
 import CoverList from "@/components/content/coverList/CoverList";
+import { getArtistsAlbum_ } from "@/network/content";
+import { filterList4 } from "@/common/util";
+
 export default {
   name: "MoreListDetail",
   components: {
     CoverList,
   },
-  props: {
-    title: {
-      type: String,
-    },
-    list: {
-      type: Array,
-    },
-  },
   data() {
     return {
-      title1: "",
-      list1: [],
+      list: [],
     };
   },
   created() {
-    if (this.title) {
-      this.title1 = this.title.toString();
-      this.list1 = [...this.list];
-    }
+    this.getArtistsAlbum();
   },
-  activated() {
-    if (this.title) {
-      this.title1 = this.title.toString();
-      this.list1 = [...this.list];
-    }
+  computed: {
+    id() {
+      return this.$route.params.id;
+    },
   },
-  computed: {},
-  methods: {},
+  methods: {
+    async getArtistsAlbum() {
+      let { hotAlbums } = await getArtistsAlbum_(this.id, 20);
+      this.list = filterList4(hotAlbums);
+    },
+  },
 };
 </script>
 

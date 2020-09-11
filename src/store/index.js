@@ -16,16 +16,15 @@ export default new Vuex.Store({
 					nickname: profile.nickname,
 			  }
 			: null,
-		listId: 0,
 		song: null,
 		artistId: 0,
 		originPlaylist: [],
+		myLists: [],
 		likelistIds: [],
 		playlist: [],
 		FMMode: false,
 		songHistory: [],
 		dailySongs: [],
-		isDaily: false,
 		refreshList: 0,
 	},
 	mutations: {
@@ -42,9 +41,8 @@ export default new Vuex.Store({
 		endLoading(state) {
 			state.loading = false
 		},
-		sendListId(state, id) {
-			state.isDaily = false
-			state.listId = id
+		sendMyLists(state, lists) {
+			state.myLists = lists
 		},
 		//喜欢操作
 		sendLikeList(state, ids) {
@@ -57,21 +55,11 @@ export default new Vuex.Store({
 			let i = state.likelistIds.findIndex(v => v == id)
 			state.likelistIds.splice(i, 1)
 		},
-		startFMMode(state) {
-			state.FMMode = true
-		},
-		endFMMode(state) {
-			state.FMMode = false
-		},
 		sendArId(state, id) {
 			state.artistId = id
 		},
 		sendPlaylist(state, playlist) {
 			state.originPlaylist = playlist
-		},
-		sendDailySongs(state, list) {
-			state.isDaily = true
-			state.dailySongs = list
 		},
 		randomList(state, playlist) {
 			state.playlist = playlist
@@ -80,7 +68,6 @@ export default new Vuex.Store({
 			let exit = null
 			if (localStorage.getItem('songHistory')) {
 				state.songHistory = JSON.parse(localStorage.getItem('songHistory'))
-				console.log(state.song)
 				if (state.song) {
 					exit = state.songHistory.find(v => v.id == state.song.id)
 				}

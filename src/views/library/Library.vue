@@ -48,10 +48,10 @@ export default {
           return v.subscribed == true;
         })
       );
+      this.$store.commit("sendMyLists", this.myLists);
     },
     sendListId(id) {
-      this.$store.commit("sendListId", id);
-      this.$router.push("/listdetail");
+      this.$router.push({ name: "ListDetail", params: { id } });
     },
   },
   beforeRouteEnter(to, from, next) {

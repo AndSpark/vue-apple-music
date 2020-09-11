@@ -9,14 +9,16 @@ const Login = () => import('@/views/login/Login')
 const User = () => import('@/views/user/User')
 const ListDetail = () => import('@/views/listDetail/ListDetail')
 const Browse = () => import('@/views/browse/Browse')
-const MoreList = () => import('@/views/moreList/MoreList')
+const MoreList = () => import('@/views/browse/moreList/MoreList')
 const MoreListDetail = () =>
-	import('@/views/moreList/moreListDetail/MoreListDetail')
+	import('@/views/browse/moreList/moreListDetail/MoreListDetail')
 const MoreSongs = () => import('@/views/browse/moreSongs/MoreSongs')
 const MoreRank = () => import('@/views/browse/moreRank/MoreRank')
 const Artist = () => import('@/views/artist/Artist')
+const ArtistAlbums = () => import('@/views/artist/artistAlbums/ArtistAlbums')
 const Comment = () => import('@/views/comment/Comment')
 const Search = () => import('@/views/search/Search')
+const MV = () => import('@/views/mv/MV')
 Vue.use(VueRouter)
 
 const routes = [
@@ -52,7 +54,7 @@ const routes = [
 
 			{
 				name: 'ListDetail',
-				path: '/listdetail',
+				path: '/listdetail/:id',
 				component: ListDetail,
 			},
 			{
@@ -67,9 +69,8 @@ const routes = [
 			},
 			{
 				name: 'MoreListDetail',
-				path: '/mldetail',
+				path: '/mldetail/:title',
 				component: MoreListDetail,
-				props: true,
 			},
 			{
 				name: 'MoreSongs',
@@ -83,18 +84,28 @@ const routes = [
 			},
 			{
 				name: 'Artist',
-				path: '/artist',
+				path: '/artist/:id',
 				component: Artist,
 			},
 			{
+				name: 'ArtistAlbums',
+				path: '/artist/ablums/:id',
+				component: ArtistAlbums,
+			},
+			{
 				name: 'Comment',
-				path: '/comment/:id',
+				path: '/comment/:type/:id',
 				component: Comment,
 			},
 			{
 				name: 'Search',
 				path: '/search',
 				component: Search,
+			},
+			{
+				name: 'MV',
+				path: '/mv',
+				component: MV,
 			},
 		],
 	},
