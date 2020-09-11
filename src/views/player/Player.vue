@@ -256,7 +256,7 @@ export default {
 	watch: {
 		song(n) {
 			this.playing = true
-			setTimeout(() => {
+			this.$nextTick(_ => {
 				if (this.song.mv) {
 					this.$refs.lyric.classList.add('ban')
 				} else {
@@ -264,7 +264,7 @@ export default {
 				}
 				this.$refs[this.type].play()
 				this.valiRotate()
-			}, 0)
+			})
 		},
 		isEnd: {
 			handler(n) {
@@ -334,7 +334,6 @@ export default {
 					this.open = true
 				} else if (rat < 0.2) {
 					this.open = false
-
 					this.$emit('show')
 					this.hideBtn()
 				}

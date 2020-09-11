@@ -129,19 +129,16 @@ export default {
 		next()
 	},
 	methods: {
-		getSearchHot() {
-			getSearchHot_().then(({ result }) => {
-				this.hots = result.hots
-			})
+		async getSearchHot() {
+			let { result } = await getSearchHot_()
+			this.hots = result.hots
 		},
-		getSearchSuggest(keywords) {
-			return getSearchSuggest_(keywords).then(({ result }) => {
-				if (result) {
-					console.log(result)
-					this.result = result
-					this.order = result.order
-				}
-			})
+		async getSearchSuggest(keywords) {
+			let { result } = await getSearchSuggest_(keywords)
+			if (result) {
+				this.result = result
+				this.order = result.order
+			}
 		},
 		hotSearch(item) {
 			this.$emit('hot-search', item)

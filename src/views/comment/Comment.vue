@@ -168,7 +168,7 @@ export default {
 				})
 			}
 		},
-		//假的
+		//假的,不知道为什么刷新评论要过会儿发的评论才会出来
 		replyComment(comment, bereply) {
 			let cmt = {
 				name: comment.user.nickname,
