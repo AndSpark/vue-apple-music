@@ -39,7 +39,7 @@ export default {
   },
   computed: {},
   created() {
-    this.getUserPlaylist_();
+    if (this.$store.state.user) this.getUserPlaylist_();
   },
   watch: {
     songId(n) {
