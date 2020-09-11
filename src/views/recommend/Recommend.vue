@@ -93,7 +93,7 @@ export default {
       this.$store.commit("playSong", { item, playlist: list });
     },
     dailyClick() {
-      this.$router.push({ namte: "ListDetail", params: { id: "daily" } });
+      this.$router.push({ name: "ListDetail", params: { id: "daily" } });
     },
     sendList(item) {
       this.$router.push({ name: "ListDetail", params: { id: item.id } });
