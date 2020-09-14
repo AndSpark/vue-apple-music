@@ -20,7 +20,6 @@ https://binaryify.github.io/NeteaseCloudMusicApi
 
 PS:由于本人接触学习前端没几个月，学习时间不长，目前能力较弱，代码可能繁乱，优化不行，请见谅。还请大神多指教。
 
-联系QQ : 421786477 
 邮箱: 421786477@qq.com
 ## Project setup
 ```
