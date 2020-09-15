@@ -17,15 +17,12 @@ export default new Vuex.Store({
 			  }
 			: null,
 		song: null,
-		artistId: 0,
-		originPlaylist: [],
+		originPlaylist: [], // 初始播放列表，用于切歌到上一首
 		myLists: [],
 		likelistIds: [],
 		playlist: [],
-		FMMode: false,
 		songHistory: [],
-		dailySongs: [],
-		refreshList: 0,
+		refreshList: 0, // 修改歌单后需要刷新的歌单ID
 	},
 	mutations: {
 		userAdd(state) {
@@ -54,9 +51,6 @@ export default new Vuex.Store({
 		unLikeIt(state, id) {
 			let i = state.likelistIds.findIndex(v => v == id)
 			state.likelistIds.splice(i, 1)
-		},
-		sendArId(state, id) {
-			state.artistId = id
 		},
 		sendPlaylist(state, playlist) {
 			state.originPlaylist = playlist
