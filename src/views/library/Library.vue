@@ -29,11 +29,20 @@ export default {
       collectLists: null,
     };
   },
-  computed: {},
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+  },
   created() {
-    if (this.$store.state.user) {
+    if (this.user) {
       this.getUserPlaylist_();
     }
+  },
+  watch: {
+    user(n) {
+      this.getUserPlaylist_();
+    },
   },
   methods: {
     async getUserPlaylist_() {

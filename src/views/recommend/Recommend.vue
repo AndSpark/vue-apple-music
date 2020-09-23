@@ -49,6 +49,9 @@ export default {
     };
   },
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
     coverDailySongs() {
       return this.dailySongs.slice(0, 7);
     },
@@ -70,10 +73,16 @@ export default {
     });
   },
   created() {
-    if (this.$store.state.user) {
+    if (this.user) {
       this.getRecommendSongs();
       this.getRecommendResource_();
     }
+  },
+  watch: {
+    user(n) {
+      this.getRecommendSongs();
+      this.getRecommendResource_();
+    },
   },
   methods: {
     async getRecommendSongs() {
