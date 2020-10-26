@@ -18,9 +18,8 @@ https://binaryify.github.io/NeteaseCloudMusicApi
 
 ![image text](https://github.com/AndSpark/pic/blob/master/003.png)
 
-PS:由于本人接触学习前端没几个月，学习时间不长，目前能力较弱，代码可能繁乱，优化不行，请见谅。还请大神多指教。
+QQ: 421786477
 
-邮箱: 421786477@qq.com
 ## Project setup
 ```
 npm install
