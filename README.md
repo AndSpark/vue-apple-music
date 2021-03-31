@@ -9,7 +9,7 @@
 ### 后端接口 ： 
 https://binaryify.github.io/NeteaseCloudMusicApi
 
-
+把前端打包的文件放到后端public里直接访问
 
 ![image text](https://github.com/AndSpark/pic/blob/master/001.png)
 
