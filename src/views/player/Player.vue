@@ -7,8 +7,8 @@
     @scrolling="scrolling"
     class="pointer-none"
   >
-    <div class="white pointer-none" ref="white"></div>
-    <div class="player pointer" ref="player">
+    <div class="white pointer-none" ref="white" :style="{height:inHeight}"></div>
+    <div class="player pointer" ref="player" :style="{height:pHeight}" >
       <div
         :class="{ 'lyric-cover': lyrHide }"
         :style="{ backgroundImage: `url(${song.al.picUrl})` }"
@@ -149,6 +149,8 @@ export default {
       delayBtn: null,
       randomMode: false,
       xunhuanMode: false,
+			inHeight:'100vh',
+			pHeight:'100vh'
     };
   },
   computed: {
@@ -169,7 +171,8 @@ export default {
         return this.originPlaylist.length - this.playlist.length;
     },
     topRem() {
-      return -window.innerHeight + 9.5 * this.rem;
+			let inh = this.inHeight.replace('px','') * 1
+      return -inh + 9.5 * this.rem;
     },
     H() {
       return this.coverH / this.rem;
@@ -204,6 +207,10 @@ export default {
       this.$refs[this.type].play();
       this.valiRotate();
     }, 0);
+
+		setInterval(() => {
+			this.inHeight = window.innerHeight + 'px'
+		}, 1000);
   },
   watch: {
     song(n) {
@@ -244,44 +251,49 @@ export default {
           }
         });
       },
-    },
+    }
   },
   methods: {
     //单击放大
     tap(e) {
+			console.log(this.topRem);
       this.$refs.scroll.scrollTo(0, this.topRem);
+			
       this.valiRotate();
     },
     //图片滑动缩放效果
     scrolling(y) {
       if (!this.isMove) {
         let rat = y / this.topRem;
-
         if (this.song.mv) {
+					let videoStyle = this.$refs.video.style
           if (!this.origin) {
-            this.$refs.video.style.width = `${6 + 0.9 * rat}rem`;
-            this.$refs.video.style.top = `${0.7 + rat}rem`;
-            this.$refs.video.style.left = `${-1.5 + rat * 1.5}rem`;
+						Object.assign(videoStyle,{
+							width:`${6 + 0.9 * rat}rem`,
+							top:`${0.7 + rat}rem`,
+							left:`${-1.5 + rat * 1.5}rem`
+						})
           } else {
-            this.$refs.video.style.width = `${6 + (this.W * 1 - 6) * rat}rem`;
-            this.$refs.video.style.top = `${
-              0.7 + (this.H * 0.5 - this.W * 0.285 - 0.7) * rat
-            }rem`;
-            this.$refs.video.style.left = `${-1.5 + rat * 1.5}rem`;
+						Object.assign(videoStyle,{
+							width:`${6 + (this.W * 1 - 6) * rat}rem`,
+							top:`${0.7 + (this.H * 0.5 - this.W * 0.285 - 0.7) * rat}rem`,
+							left:`${-1.5 + rat * 1.5}rem`
+						})
           }
         } else {
+					let imgStyle = this.$refs.img.style
           if (!this.origin) {
-            this.$refs.img.style.width = `${3.5 + 0.9 * rat}rem`;
-            this.$refs.img.style.top = `${0.6 + rat}rem`;
-            this.$refs.img.style.left = `${-1.5 + rat}rem`;
+						Object.assign(imgStyle,{
+							width:`${3.5 + 0.9 * rat}rem`,
+							top:`${0.6 + rat}rem`,
+							left:`${-1.5 + rat}rem`
+						})
           } else {
-            this.$refs.img.style.width = `${
-              3.5 + (this.H * 0.8 - 3.5) * rat
-            }rem`;
-            this.$refs.img.style.top = `${0.6 + (this.H * 0.1 - 0.6) * rat}rem`;
-            this.$refs.img.style.left = `${
-              -1.5 + (this.W * 0.5 + 1.5 - this.H * 0.8 * 0.5) * rat
-            }rem`;
+						Object.assign(imgStyle,{
+							width:`${3.5 + (this.H * 0.8 - 3.5) * rat}rem`,
+							top:`${0.6 + (this.H * 0.1 - 0.6) * rat}rem`,
+							left:`${-1.5 + (this.W * 0.5 + 1.5 - this.H * 0.8 * 0.5) * rat}rem`
+						})
           }
         }
 
@@ -339,11 +351,13 @@ export default {
     //更新音乐时间
     timeupdate() {
       if (!this.isMove) {
-        this.realCurTime = this.$refs[this.type].currentTime.toFixed(2) * 1;
-        this.currentTime = this.$refs[this.type].currentTime.toFixed(0) * 1;
-        this.duration = this.$refs[this.type].duration.toFixed(0) * 1;
+				let p = this.$refs[this.type]
+
+        this.realCurTime = p.currentTime.toFixed(2) * 1;
+        this.currentTime = p.currentTime.toFixed(0) * 1;
+        this.duration = p.duration.toFixed(0) * 1;
         this.leftTime =
-          this.duration - this.$refs[this.type].currentTime.toFixed(0) * 1;
+          this.duration - p.currentTime.toFixed(0) * 1;
         this.$refs.i.style.width = `${
           (this.currentTime / this.duration) * 100
         }%`;
@@ -473,42 +487,48 @@ export default {
 
     listAnimation(v) {
       if (this.song.mv) {
+				let videoStyle = this.$refs.video.style
         if (!v) {
-          this.$refs.video.style.transition = ".3s";
-          this.$refs.video.style.width = `${6.9}rem`;
-          this.$refs.video.style.top = `${1.7}rem`;
-          this.$refs.video.style.left = `${0}rem`;
+					Object.assign(videoStyle,{
+						transition: ".3s",
+						width: `6.9rem`,
+						top:`1.7rem`,
+						left:`0rem`
+					})
           setTimeout(() => {
             this.$refs.video.style.transition = null;
           }, 300);
         } else {
-          this.$refs.video.style.transition = ".3s";
-          this.$refs.video.style.width = `${this.W}rem`;
-          this.$refs.video.style.top = `${
-            0.7 + (this.H * 0.5 - this.W * 0.285 - 0.7)
-          }rem`;
-          this.$refs.video.style.left = `0rem`;
+						Object.assign(videoStyle,{
+						transition: ".3s",
+						width: `${this.W}rem`,
+						top:`${0.7 + (this.H * 0.5 - this.W * 0.285 - 0.7)}rem`,
+						left:`0rem`
+					})
           setTimeout(() => {
             this.$refs.video.style.transition = null;
           }, 300);
         }
         return;
       }
+			let imgStyle = this.$refs.img.style
       if (!v) {
-        this.$refs.img.style.transition = ".3s";
-        this.$refs.img.style.width = `${4.4}rem`;
-        this.$refs.img.style.top = `${1.6}rem`;
-        this.$refs.img.style.left = `${-0.5}rem`;
+				Object.assign(imgStyle,{
+					transition:".3s",
+					width:'4.4rem',
+					top:'1.6rem',
+					left:'-0.5rem'
+				})
         setTimeout(() => {
           this.$refs.img.style.transition = null;
         }, 300);
       } else {
-        this.$refs.img.style.transition = ".3s";
-        this.$refs.img.style.width = `${3.5 + (this.H * 0.8 - 3.5)}rem`;
-        this.$refs.img.style.top = `${0.6 + (this.H * 0.1 - 0.6)}rem`;
-        this.$refs.img.style.left = `${
-          -1.5 + (this.W * 0.5 + 1.5 - this.H * 0.8 * 0.5)
-        }rem`;
+				Object.assign(imgStyle,{
+					transition:".3s",
+					width:`${3.5 + (this.H * 0.8 - 3.5)}rem`,
+					top:`${0.6 + (this.H * 0.1 - 0.6)}rem`,
+					left:`${-1.5 + (this.W * 0.5 + 1.5 - this.H * 0.8 * 0.5)}rem`
+				})
         setTimeout(() => {
           this.$refs.img.style.transition = null;
         }, 300);

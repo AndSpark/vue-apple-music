@@ -3,7 +3,7 @@ import store from '@/store'
 export default function(option) {
 	return new Promise((resolve, reject) => {
 		const instance = Axios.create({
-			baseURL: 'http://localhost:3000',
+			baseURL: 'http://apmusic.vaiwan.com',
 			timeout: 5000,
 			withCredentials: true,
 		})

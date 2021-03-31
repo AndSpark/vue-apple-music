@@ -38,7 +38,7 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      if(Cookies.get('MUSIC_U')){
+      if(vm.$store.state.user){
         next('/user')
       }else{
       next()

@@ -40,14 +40,19 @@ export default {
     return {
       scroll: null,
       rem: 12,
+			inH:''
     };
   },
   computed: {
     topRem() {
-      return -window.innerHeight + 9.5 * this.rem;
+      return -this.inH + 9.5 * this.rem;
     },
   },
   mounted() {
+		setInterval(() => {
+			this.inH = window.innerHeight
+		}, 1000);
+
     this.scroll = new BScroll(this.$refs.wrapper, {
       probeType: this.probeType,
       pullUpLoad: this.pullUpLoad,

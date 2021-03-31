@@ -126,6 +126,7 @@ export default {
 			})
 		},
 		getLikeList() {
+			if(!this.$store.state.user) return
 			getLikeList_(this.$store.state.user.uid).then(({ ids }) => {
 				this.$store.commit('sendLikeList', ids)
 			})
