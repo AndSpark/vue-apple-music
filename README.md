@@ -4,12 +4,11 @@
 
 ### 根据移动端applemusic 主要分为 资料库，为你推荐，浏览，MV 四个部分，目前已完成大部分功能。 
 
-### 技术栈： VUE全家桶，better-scroll ,awesome-swiper, js-cookie,axios， 其余全部手打
+### 技术栈： VUE全家桶，better-scroll ,awesome-swiper, js-cookie,axios
 
 ### 后端接口 ： 
 https://binaryify.github.io/NeteaseCloudMusicApi
 
-### 此项目供学习用
 
 
 ![image text](https://github.com/AndSpark/pic/blob/master/001.png)
