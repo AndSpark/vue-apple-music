@@ -18,3 +18,11 @@ export function getUserPlaylist_(uid) {
 		},
 	})
 }
+
+export function getAccount() {
+	return axios({
+		url: '/user/account',
+		params: {
+			timestamp: new Date().getTime(),
+		},})
+}

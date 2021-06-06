@@ -3,19 +3,11 @@ import Vuex from 'vuex'
 import Cookies from 'js-cookie'
 Vue.use(Vuex)
 
-if (Cookies.get('profile')) {
-	var profile = JSON.parse(Cookies.get('profile'))
-}
 
 export default new Vuex.Store({
 	state: {
 		loading: false,
-		user: profile
-			? {
-					uid: profile.userId,
-					nickname: profile.nickname,
-			  }
-			: null,
+		user: null,
 		song: null,
 		originPlaylist: [], // 初始播放列表，用于切歌到上一首
 		myLists: [],

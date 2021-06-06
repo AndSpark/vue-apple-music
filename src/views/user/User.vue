@@ -24,7 +24,7 @@ export default {
   computed: {},
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      if (!Cookies.get("MUSIC_U")) {
+      if (!vm.$store.state.user) {
         next("/login");
       } else {
         next();
@@ -38,10 +38,11 @@ export default {
     logout() {
       Cookies.remove("profile");
       Cookies.remove("MUSIC_U");
+      Cookies.remove("__csrf");
+      Cookies.remove("NMTID");
+			document.cookie = 'MUSIC_U=1'
       this.$store.commit("userClear");
-      setTimeout(() => {
-        this.$router.push("/login");
-      }, 0);
+      this.$router.push("/login");
     },
   },
 };
