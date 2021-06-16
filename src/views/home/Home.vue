@@ -11,7 +11,7 @@
       <transition name="fade" v-on:after-leave="refresh">
         <keep-alive :include="includeList">
           <router-view
-            :class="{ load: loading, posi: true }"
+            :class="{  posi: true }"
             ref="view"
             @refresh="refresh"
             @randomPlay="randomPlay"
@@ -39,6 +39,7 @@
     <!-- 播放器上拉时背景变黑 -->
     <div class="cover" ref="cover"></div>
     <loading v-show="loading"></loading>
+
   </div>
 </template>
 

@@ -1,4 +1,33 @@
-import axios from '@/network/axios'
+import Axios from 'axios'
+
+const instance = Axios.create({
+	baseURL: process.env.VUE_APP_URL,
+	timeout: 5000,
+	withCredentials: true,
+})
+
+instance.interceptors.response.use(
+	response => {
+		return response.data
+	},
+	err => {
+		return err
+	}
+)
+
+const axios = (option) => {
+	return new Promise((resolve, reject) => {
+		instance(option)
+			.then(res => {
+				resolve(res)
+			})
+			.catch(err => {
+				reject(err)
+			})
+	})
+}
+
+
 
 export function userLogin_(phone,password){
   return axios({

@@ -8,7 +8,7 @@
     class="pointer-none"
   >
     <div class="white pointer-none" ref="white" :style="{height:inHeight}"></div>
-    <div class="player pointer" ref="player" :style="{height:pHeight}" >
+    <div class="player pointer" ref="player" :style="{height:inHeight}" >
       <div
         :class="{ 'lyric-cover': lyrHide }"
         :style="{ backgroundImage: `url(${song.al.picUrl})` }"
@@ -150,7 +150,6 @@ export default {
       randomMode: false,
       xunhuanMode: false,
 			inHeight:'100vh',
-			pHeight:'100vh'
     };
   },
   computed: {
@@ -199,18 +198,17 @@ export default {
     this.coverH = this.$refs.topCover.offsetHeight;
     this.coverW = this.$refs.topCover.offsetWidth;
 
-    setTimeout(() => {
-      this.playing = true;
+    this.$nextTick().then(_ => {
+			this.playing = true;
       if (this.song.mv) {
         this.$refs.lyric.classList.add("ban");
       }
       this.$refs[this.type].play();
       this.valiRotate();
-    }, 0);
-
-		setInterval(() => {
 			this.inHeight = window.innerHeight + 'px'
-		}, 1000);
+			
+		})
+      
   },
   watch: {
     song(n) {
@@ -256,13 +254,13 @@ export default {
   methods: {
     //单击放大
     tap(e) {
-			console.log(this.topRem);
       this.$refs.scroll.scrollTo(0, this.topRem);
-			
       this.valiRotate();
     },
     //图片滑动缩放效果
     scrolling(y) {
+			requestAnimationFrame(() => {
+				
       if (!this.isMove) {
         let rat = y / this.topRem;
         if (this.song.mv) {
@@ -313,6 +311,8 @@ export default {
 
         this.valiRotate();
       }
+			})
+
     },
 
     showDrawer() {
@@ -385,12 +385,14 @@ export default {
       this.touchmove(e);
     },
     touchmove(e) {
+
       this.x = e.targetTouches[0].clientX;
       if (this.x <= 2.5 * this.rem) {
         e.targetTouches[0].clientX = 2.5 * this.rem;
       } else if (this.x >= this.windowWidth - 2.5 * this.rem) {
         e.targetTouches[0].clientX = this.windowWidth - 2.5 * this.rem;
       }
+			
       this.rate = (this.x - this.offsetLeft) / this.offsetWidth;
       this.$refs.i.style.width = `${this.rate * 100}%`;
       this.$refs.b.style.left = `${this.rate * 100}%`;
