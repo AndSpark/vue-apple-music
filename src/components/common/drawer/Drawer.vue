@@ -38,8 +38,10 @@ export default {
       bounce: false,
     });
 
-    this.contentHeight = -this.$refs.section.offsetHeight;
-    this.coverOpcaity = -this.contentHeight / window.innerHeight;
+		this.$refs.white.style.height = window.innerHeight + 'px'
+		this.refresh()
+    this.contentHeight = - this.$refs.section.offsetHeight;
+    this.coverOpcaity = - this.contentHeight / window.innerHeight;
 
     //自动滚动至边界
     this.bs.on("touchEnd", (position) => {
@@ -63,6 +65,7 @@ export default {
         this.pointer = true;
       }
     });
+
   },
   methods: {
     showDrawer() {
@@ -74,9 +77,12 @@ export default {
       this.bs.scrollTo(0, 0, 500);
     },
     refresh() {
-      this.contentHeight = -this.$refs.section.offsetHeight;
-      this.coverOpcaity = -this.contentHeight / window.innerHeight;
-      this.bs.refresh();
+			this.$nextTick().then(_ => {
+				this.contentHeight = -this.$refs.section.offsetHeight;
+				this.coverOpcaity = -this.contentHeight / window.innerHeight;
+				this.bs.refresh();
+			})
+
     },
   },
 };

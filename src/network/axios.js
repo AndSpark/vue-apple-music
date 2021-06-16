@@ -1,5 +1,4 @@
 import Axios from 'axios'
-import store from '@/store'
 import loadingBar from '@/utils/loadingBar'
 const instance = Axios.create({
 	baseURL: process.env.VUE_APP_URL,

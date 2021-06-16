@@ -40,18 +40,6 @@
 					<span>{{ song.listName }}</span>
 				</p>
 			</div>
-
-			<swiper-list
-				:list="songs"
-				:small="true"
-				@refresh="refreshDrawer"
-				titleL="相似音乐"
-				@itemClick="playSong"
-				v-if="songs.length > 0"
-			></swiper-list>
-			<div class="no-music" v-if="songs.length == 0">
-				<h2>暂无相似音乐</h2>
-			</div>
 			<div class="like" v-if="$store.state.user && !song.mv">
 				<p @click="likeClick">
 					<span
@@ -67,7 +55,7 @@
 
 <script>
 import Drawer from '@/components/common/drawer/Drawer'
-import { filterList3, filterList2 } from '@/common/util'
+import { filterList3 } from '@/common/util'
 import {
 	getSimiSong_,
 	getLikeList_,
@@ -307,18 +295,6 @@ export default {
 		.red {
 			color: #ff2c55;
 		}
-	}
-}
-.no-music {
-	box-sizing: border-box;
-	height: calc(25vw + 83px);
-	background-color: #fff;
-	text-align: center;
-	padding-top: 3rem;
-
-	h2 {
-		font-size: 1.8rem;
-		color: #111;
 	}
 }
 </style>

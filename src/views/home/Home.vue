@@ -38,14 +38,10 @@
     <drawer-song ref="drawerSong" v-if="song" @add-list="addList"></drawer-song>
     <!-- 播放器上拉时背景变黑 -->
     <div class="cover" ref="cover"></div>
-    <loading v-show="loading"></loading>
-
   </div>
 </template>
 
 <script>
-import Loading from "@/components/common/loading/Loading";
-
 import NavBar from "@/components/content/navBar/NavBar";
 import MainBar from "@/components/content/mainBar/MainBar";
 import Player from "@/views/player/Player";
@@ -60,7 +56,6 @@ export default {
     MainBar,
     Player,
     Scroll,
-    Loading,
     CommentBox,
     ListBox,
     DrawerSong,
@@ -95,9 +90,6 @@ export default {
   computed: {
     song() {
       return this.$store.state.song;
-    },
-    loading() {
-      return this.$store.state.loading;
     },
     showBack() {
       return this.backList.includes(this.$route.name);

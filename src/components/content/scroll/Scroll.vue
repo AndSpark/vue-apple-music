@@ -40,7 +40,8 @@ export default {
     return {
       scroll: null,
       rem: 12,
-			inH:''
+			inH:'',
+			timer:null
     };
   },
   computed: {
@@ -48,8 +49,12 @@ export default {
       return -this.inH + 9.5 * this.rem;
     },
   },
+	beforeDestroy(){
+		clearInterval(this.timer)
+	},
   mounted() {
-		setInterval(() => {
+		this.inH = window.innerHeight
+		this.timer = setInterval(() => {
 			this.inH = window.innerHeight
 		}, 1000);
 
@@ -72,7 +77,9 @@ export default {
         if (y == this.topRem) {
           this.scroll.stop();
         }
+
         this.$emit("scrolling", y);
+
         if (
           (y > this.topRem - 20 && y < this.topRem + 20) ||
           (y >= -20 && y < 20)
@@ -131,11 +138,9 @@ export default {
       this.scroll && this.scroll.finishPullUp();
     },
     refresh() {
-      if (this.scroll) {
-        setTimeout(() => {
-          this.scroll.refresh();
-        }, 100);
-      }
+			this.$nextTick().then(_ => {
+				this.scroll && this.scroll.refresh();
+			})
     },
   },
 };

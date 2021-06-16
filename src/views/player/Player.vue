@@ -99,7 +99,6 @@
 <script>
 import PlayerList from "@/views/player/comps/PlayerList";
 import Scroll from "@/components/content/scroll/Scroll";
-
 import { getPersonalFM_ } from "@/network/content";
 import { filterListFM } from "@/common/util";
 
@@ -150,6 +149,7 @@ export default {
       randomMode: false,
       xunhuanMode: false,
 			inHeight:'100vh',
+			topRem:0,
     };
   },
   computed: {
@@ -168,10 +168,6 @@ export default {
     isEnd() {
       if (this.originPlaylist)
         return this.originPlaylist.length - this.playlist.length;
-    },
-    topRem() {
-			let inh = this.inHeight.replace('px','') * 1
-      return -inh + 9.5 * this.rem;
     },
     H() {
       return this.coverH / this.rem;
@@ -197,7 +193,6 @@ export default {
     this.offsetWidth = this.$refs.bar.offsetWidth;
     this.coverH = this.$refs.topCover.offsetHeight;
     this.coverW = this.$refs.topCover.offsetWidth;
-
     this.$nextTick().then(_ => {
 			this.playing = true;
       if (this.song.mv) {
@@ -206,7 +201,8 @@ export default {
       this.$refs[this.type].play();
       this.valiRotate();
 			this.inHeight = window.innerHeight + 'px'
-			
+      this.topRem = - window.innerHeight + 9.5 * this.rem;
+
 		})
       
   },
@@ -253,14 +249,13 @@ export default {
   },
   methods: {
     //单击放大
-    tap(e) {
+    tap() {
       this.$refs.scroll.scrollTo(0, this.topRem);
       this.valiRotate();
     },
     //图片滑动缩放效果
     scrolling(y) {
 			requestAnimationFrame(() => {
-				
       if (!this.isMove) {
         let rat = y / this.topRem;
         if (this.song.mv) {
@@ -334,14 +329,13 @@ export default {
     // 图片旋转
     valiRotate() {
       if (this.song.mv) return;
-      let h;
       this.$nextTick((_) => {
-        h = parseInt(this.$refs.img.style.width);
-        if (h >= 3 && h <= 5 && this.playing) {
+        let h = this.$refs.img.offsetWidth
+        if (h >= 30 && h <= 50 && this.playing) {
           this.$refs.img.classList.add("rot");
           this.isRotate = true;
         } else {
-          if ((this.isRotate = true)) {
+          if (this.isRotate == true) {
             this.$refs.img.classList.remove("rot");
             this.isRotate = false;
           }
@@ -352,7 +346,7 @@ export default {
     timeupdate() {
       if (!this.isMove) {
 				let p = this.$refs[this.type]
-
+				if(!p) return;
         this.realCurTime = p.currentTime.toFixed(2) * 1;
         this.currentTime = p.currentTime.toFixed(0) * 1;
         this.duration = p.duration.toFixed(0) * 1;
@@ -649,7 +643,6 @@ export default {
       position: absolute;
       border-radius: 2rem;
       box-shadow: 0 2px 10px 1px #aaa;
-      // height: 3.5rem;
       width: 3.5rem;
       top: 0.6rem;
       left: -1.5rem;
